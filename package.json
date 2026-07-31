@@ -1,0 +1,27 @@
+{
+  "name": "orbita-ui",
+  "version": "0.0.1",
+  "description": "This package stores the many UI/UX libraries of Tecnologias Orbita company",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tecnologias-Orbita/orbita-ui.git"
+  },
+  "keywords": [
+    "ui",
+    "ux",
+    "typescript",
+    "react",
+    "tailwind",
+    "javascript"
+  ],
+  "author": "Tecnologias-Orbita",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tecnologias-Orbita/orbita-ui/issues"
+  },
+  "homepage": "https://github.com/Tecnologias-Orbita/orbita-ui#readme"
+}
