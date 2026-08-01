@@ -1,4 +1,1 @@
-import Button from "./components/Button";
-export default {
-  Button,
-};
+export { Btn } from "./components/buttons";
