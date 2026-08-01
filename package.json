@@ -23,5 +23,10 @@
   "bugs": {
     "url": "https://github.com/Tecnologias-Orbita/orbita-ui/issues"
   },
-  "homepage": "https://github.com/Tecnologias-Orbita/orbita-ui#readme"
+  "homepage": "https://github.com/Tecnologias-Orbita/orbita-ui#readme",
+  "private": true,
+  "workspaces": [
+    "documentation",
+    "orbita-ui-react"
+  ]
 }
