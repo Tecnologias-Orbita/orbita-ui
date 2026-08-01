@@ -1,4 +1,7 @@
 **/package-lock.json
-**/.vscode
+.vscode
 **/node_modules
 **/dist
+
+# Dynamic css in orbita-ui-react
+orbita-ui-react/**/*.css
