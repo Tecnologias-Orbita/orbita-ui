@@ -25,7 +25,6 @@
   "homepage": "https://github.com/Tecnologias-Orbita/orbita-ui#readme",
   "private": true,
   "workspaces": [
-    "documentation",
     "orbita-ui-react"
   ]
 }
