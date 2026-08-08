@@ -2,6 +2,7 @@
   "name": "@orbita-ui/react",
   "version": "0.0.1",
   "description": "This is the React library in the orbita-ui package",
+  "repository": "https://github.com/Tecnologias-Orbita/orbita-ui.git",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
