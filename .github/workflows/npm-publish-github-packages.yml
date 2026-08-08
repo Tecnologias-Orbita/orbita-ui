@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 21
+          node-version: 20
           registry-url: https://npm.pkg.github.com/
       - run: npm -w "orbita-ui-react" i
       - run: npm -w "orbita-ui-react" run build
