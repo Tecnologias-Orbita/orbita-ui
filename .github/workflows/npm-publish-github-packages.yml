@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
       - run: npm test
 
   publish-gpr:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,6 +30,7 @@ jobs:
           node-version: 21
           registry-url: https://npm.pkg.github.com/
       - run: npm -w "orbita-ui-react" i
+      - run: npm -w "orbita-ui-react" run build
       - run: npm -w "orbita-ui-react" publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
