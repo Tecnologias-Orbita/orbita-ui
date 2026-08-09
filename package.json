@@ -4,7 +4,8 @@
   "description": "This package stores the many UI/UX libraries of Tecnologias Orbita company",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"Error: no test specified\"",
+    "ui-react:dev": "npm run -w orbita-ui-react build -- --watch"
   },
   "repository": {
     "url": "https://github.com/Tecnologias-Orbita/orbita-ui.git"
