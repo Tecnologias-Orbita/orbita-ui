@@ -1,2 +1,5 @@
+export type { IComponent, IWithChildrenComponent } from "./common";
+
 export { Btn } from "./components/buttons";
-export { Navbar } from "./components/layout";
+
+export { Navbar, Footer } from "./components/layout";

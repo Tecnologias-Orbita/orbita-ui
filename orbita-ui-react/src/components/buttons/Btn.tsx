@@ -1,4 +1,4 @@
-import type { Btn as BtnType } from "./types";
+import type { BtnType } from "./types";
 import { twMerge } from "tailwind-merge";
 
 const Btn: BtnType = ({

@@ -1,17 +1,20 @@
 import { twMerge } from "tailwind-merge";
 import { NavbarProvider, useNavbar } from "../../contexts";
 import { useEffect } from "react";
+import type { IWithChildrenComponent } from "../../common";
 
 const SELECTOR_CLASS = "--navbar_nav";
 
-interface Props {
-  children?: React.ReactNode;
-  style?: React.CSSProperties;
-  className?: string;
+interface NavbarProps extends IWithChildrenComponent {
   autoControlled?: boolean;
 }
 
-function Container({ children, className, autoControlled, ...props }: Props) {
+function Container({
+  children,
+  className,
+  autoControlled,
+  ...props
+}: NavbarProps) {
   return (
     <NavbarProvider classSelector={SELECTOR_CLASS}>
       <header
@@ -27,7 +30,7 @@ function Container({ children, className, autoControlled, ...props }: Props) {
   );
 }
 
-interface LogoProps extends Props {
+interface LogoProps extends IWithChildrenComponent {
   logoUrl?: string;
 }
 
@@ -39,7 +42,7 @@ function Logo({ children, logoUrl, className, ...props }: LogoProps) {
   );
 }
 
-interface ListProps extends Props {
+interface ListProps extends IWithChildrenComponent {
   centered?: boolean;
   activeClassName?: string;
   activeStyle?: React.CSSProperties;
@@ -79,7 +82,7 @@ function List({
   );
 }
 
-interface ItemProps extends Props {
+interface ItemProps extends IWithChildrenComponent {
   href?: string;
   target?: string;
   active?: boolean;
