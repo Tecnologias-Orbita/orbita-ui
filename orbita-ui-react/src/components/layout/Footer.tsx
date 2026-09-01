@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import type { IWithChildrenComponent } from "../../common";
+import type { IWithChildrenComponent } from "../common";
 
 interface FooterProps extends IWithChildrenComponent {
   centered?: boolean;

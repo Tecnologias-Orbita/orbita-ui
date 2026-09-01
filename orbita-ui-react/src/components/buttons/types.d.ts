@@ -1,5 +1,5 @@
 import type React from "react";
-import type { IWithChildrenComponent } from "../../common";
+import type { IWithChildrenComponent } from "../common";
 
 export type BtnProps = {
   link?: boolean;
