@@ -1,6 +1,6 @@
 {
   "name": "@tecnologias-orbita/orbita-ui-react",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "This is the React library in the orbita-ui package",
   "repository": {
     "url": "https://github.com/Tecnologias-Orbita/orbita-ui.git"
