@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { NavbarProvider, useNavbar } from "../../contexts";
 import { useEffect } from "react";
-import type { IWithChildrenComponent } from "../../common";
+import type { IWithChildrenComponent } from "../common";
 
 const SELECTOR_CLASS = "--navbar_nav";
 
@@ -16,10 +16,13 @@ function Container({
   ...props
 }: NavbarProps) {
   return (
-    <NavbarProvider classSelector={SELECTOR_CLASS}>
+    <NavbarProvider
+      autoControlled={autoControlled}
+      classSelector={SELECTOR_CLASS}
+    >
       <header
         className={twMerge(
-          "sticky top-0 left-0 flex w-full min-h-16 py-2 px-4 bg-white border-b border-b-slate-200 shadow",
+          "sticky top-0 left-0 z-100 flex w-full min-h-16 py-2 px-4 bg-white border-b border-b-slate-200 shadow-sm",
           className,
         )}
         {...props}

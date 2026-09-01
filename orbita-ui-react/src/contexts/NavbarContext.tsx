@@ -19,7 +19,7 @@ const NavbarContext = createContext<ContextType>({
 interface ProviderProps {
   children: React.ReactNode;
   classSelector: string;
-  autoControlled?: boolean;
+  autoControlled: boolean | undefined;
 }
 
 export function NavbarProvider({
