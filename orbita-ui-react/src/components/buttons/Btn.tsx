@@ -7,6 +7,7 @@ const Btn: BtnType = ({
   link,
   href,
   target,
+  linkComponent,
   onClick,
   disabled,
   loading,
@@ -19,16 +20,27 @@ const Btn: BtnType = ({
     loading && "cursor-wait",
     className,
   );
+  const resolvedHref = typeof href === "function" ? href() : href;
 
   if (link) {
     if (!href) throw new Error("Link button must have an href");
 
+    if (linkComponent) {
+      const LinkComponent = linkComponent;
+
+      return (
+        <LinkComponent
+          href={resolvedHref}
+          target={target}
+          className={actualClassName}
+        >
+          {children}
+        </LinkComponent>
+      );
+    }
+
     return (
-      <a
-        href={typeof href === "function" ? href() : href}
-        target={target}
-        className={actualClassName}
-      >
+      <a href={resolvedHref} target={target} className={actualClassName}>
         {children}
       </a>
     );
