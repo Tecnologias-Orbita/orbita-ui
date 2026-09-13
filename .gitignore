@@ -5,3 +5,5 @@
 
 # Dynamic css in orbita-ui-react
 orbita-ui-react/**/*.css
+
+.agents/skills
