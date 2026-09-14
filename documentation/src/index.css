@@ -1,12 +1,24 @@
 @import "tailwindcss";
 @source "../../node_modules/@tecnologias-orbita/orbita-ui-react/dist";
 
+@plugin "@tailwindcss/typography";
+
+@font-face {
+  font-family: "Cascadia";
+  font-style: normal;
+  src: url("/CascadiaCode-VariableFont_wght.woff2") format("woff2");
+}
+
+@theme {
+  --font-cascadia: "Cascadia", sans-serif;
+}
+
 @layer base {
   body {
-    @apply min-h-svh flex justify-stretch;
+    @apply max-h-svh flex justify-stretch;
   }
 
   #root {
-    @apply w-full;
+    @apply w-full overflow-hidden flex flex-col font-cascadia;
   }
 }
