@@ -1,2 +1,12 @@
 @import "tailwindcss";
 @source "../../node_modules/@tecnologias-orbita/orbita-ui-react/dist";
+
+@layer base {
+  body {
+    @apply min-h-svh flex justify-stretch;
+  }
+
+  #root {
+    @apply w-full;
+  }
+}
