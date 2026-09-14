@@ -66,3 +66,7 @@ export interface Metadata {
 ```
 
 The `title` is the title of the page. The `description` is the description of the page. The `keywords` is an array of keywords that will be used to improve the SEO of the page. The `author` is the name of the author of the page.
+
+## Performance
+
+You should use the `documentation` and `react-best-practices` skills in your workflow.
