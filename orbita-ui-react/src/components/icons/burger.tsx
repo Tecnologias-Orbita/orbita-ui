@@ -1,10 +1,6 @@
-import type { IComponent } from "../common";
+import type { IIconProps } from "./types";
 
-interface Props extends IComponent {
-  size?: number;
-}
-
-export default function BurgerIcon({ className, size, ...props }: Props) {
+export default function BurgerIcon({ className, size, ...props }: IIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
