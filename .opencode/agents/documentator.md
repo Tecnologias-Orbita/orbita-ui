@@ -1,6 +1,6 @@
 ---
 description: Create, read and update Orbita UI documentation
-mode: subagent
+mode: primary
 temperature: 0.1
 tools:
   write: true
@@ -58,15 +58,30 @@ src
 Metadata is a file that contains the information about the page. It satisfies the following interface:
 
 ```ts
-export interface Metadata {
+export type MetadataLinkType = {
+  text: string | React.ReactNode;
+  href: string;
+};
+
+export type DocMetadataType = {
   title: string;
   description: string;
-  keywords: string[];
-}
+  keywords?: string[];
+  breadcrumb?: MetadataLinkType[];
+  index?: {
+    text: string | React.ReactNode;
+    ref: `#${string}`;
+  }[];
+  links?: {
+    previous?: MetadataLinkType;
+    next?: MetadataLinkType;
+    related?: MetadataLinkType[];
+  };
+};
 ```
 
-The `title` is the title of the page. The `description` is the description of the page. The `keywords` is an array of keywords that will be used to improve the SEO of the page. The `author` is the name of the author of the page.
+The `title` is the title of the page. The `description` is the description of the page. The `keywords` is an array of keywords that will be used to improve the SEO of the page. You have tu write a metadata file for each page.
 
 ## Performance
 
-You should use the `documentation` and `react-best-practices` skills in your workflow.
+You should use the `documentation` and `react-best-practices` and `frontend-design` skills in your workflow.
