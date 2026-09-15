@@ -16,6 +16,19 @@ export default function ComponentsPage() {
       category: "Buttons",
     },
     {
+      name: "Slider",
+      path: "/docs/orbita-ui-react/components/slider",
+      description:
+        "Full-featured carousel with autoplay, navigation, dots, and keyboard support",
+      category: "Common",
+    },
+    {
+      name: "Code",
+      path: "/docs/orbita-ui-react/components/code",
+      description: "Syntax highlighting component for code blocks with Dracula theme",
+      category: "Common",
+    },
+    {
       name: "Navbar",
       path: "/docs/orbita-ui-react/components/navbar",
       description:

@@ -3,12 +3,6 @@ import { Link } from "react-router";
 export default function UiReactMain() {
   return (
     <div className="prose max-w-4xl mx-auto px-4 py-8">
-      <h1>Orbita UI React</h1>
-      <p className="lead">
-        A modern, accessible, and customizable React component library built
-        with TypeScript, Tailwind CSS v4, and React 19.
-      </p>
-
       <div className="grid gap-6 md:grid-cols-2 mt-8">
         <Link
           to="/docs/orbita-ui-react/installation"

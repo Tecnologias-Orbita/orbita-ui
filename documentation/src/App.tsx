@@ -14,8 +14,8 @@ export default function App() {
           <Navbar.Item href="/">Home</Navbar.Item>
         </Navbar.List>
       </Navbar.Container>
-      <Sidebar.Wrapper>
-        <Sidebar.Sidebar>
+      <Sidebar.Wrapper className="overflow-auto">
+        <Sidebar.Sidebar className="sticky top-0 left-0">
           <NavLink to="/">Home</NavLink>
           {Object.values(DOCS_MAP).map((pkg) => (
             <>
