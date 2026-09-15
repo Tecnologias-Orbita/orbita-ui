@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "ui-react:dev": "npm run -w orbita-ui-react build -- --watch",
-    "doc:dev": "cd documentation && npm run dev"
+    "doc:dev": "cd documentation && npm run dev",
+    "doc:build": "cd documentation && npm run build"
   },
   "repository": {
     "url": "https://github.com/Tecnologias-Orbita/orbita-ui.git"

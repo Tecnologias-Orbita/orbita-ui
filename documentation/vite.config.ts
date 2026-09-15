@@ -15,4 +15,28 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              name: "large-libs",
+              test: /node_modules/,
+              minSize: 100000,
+              maxSize: 250000,
+              priority: 10,
+            },
+            {
+              name: "docs",
+              test: /docs/,
+              minSize: 50000,
+              maxSize: 250000,
+              priority: 20,
+            },
+          ],
+        },
+      },
+    },
+  },
 });

@@ -5,9 +5,9 @@ import DocsPage from "./page";
 import DocsLayout from "@/layout/Docs.layout";
 export default function DocsRouter() {
   const { pkg, page, segment } = useParams();
-  const resultPkg = DOCS_MAP[pkg];
-  const resultSegment = resultPkg?.childMap?.[segment];
-  const resultPage = resultSegment?.childMap?.[page];
+  const resultPkg = DOCS_MAP[pkg || ""];
+  const resultSegment = resultPkg?.childMap?.[segment || ""];
+  const resultPage = resultSegment?.childMap?.[page || ""];
   const level = Number(!!pkg) + Number(!!segment) + Number(!!page);
 
   if (level === 0) return <DocsPage />;
