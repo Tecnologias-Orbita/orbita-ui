@@ -1,2 +1,75 @@
 @import "tailwindcss";
 @source "../../node_modules/@tecnologias-orbita/orbita-ui-react/dist";
+
+@plugin "@tailwindcss/typography";
+
+@font-face {
+  font-family: "Cascadia";
+  font-style: normal;
+  src: url("/CascadiaCode-VariableFont_wght.woff2") format("woff2");
+}
+
+@theme {
+  --font-cascadia: "Cascadia", sans-serif;
+
+  --color-docs-bg: #fafafa;
+  --color-docs-surface: #ffffff;
+  --color-docs-border: #e5e5e5;
+  --color-docs-text: #171717;
+  --color-docs-muted: #737373;
+  --color-docs-accent: #0066cc;
+  --color-docs-accent-hover: #0052a3;
+  --color-docs-accent-subtle: #e8f0fe;
+  --color-docs-success: #059669;
+  --color-docs-warning: #d97706;
+  --color-docs-error: #dc2626;
+  --color-docs-code: #f4f4f4;
+}
+
+@layer base {
+  body {
+    @apply max-h-svh flex justify-stretch bg-docs-bg;
+  }
+
+  #root {
+    @apply w-full overflow-hidden flex flex-col font-cascadia;
+  }
+
+  /* Prose customization */
+  .prose {
+    @apply text-docs-text;
+  }
+  .prose h1, .prose h2, .prose h3 { @apply font-semibold tracking-tight; }
+  .prose h1 { @apply text-3xl mb-4; }
+  .prose h2 { @apply text-2xl mt-10 mb-4 border-b border-docs-border pb-2; }
+  .prose h3 { @apply text-xl mt-8 mb-3; }
+  .prose code { @apply bg-docs-code px-1.5 py-0.5 rounded text-sm font-mono; }
+  .prose pre { @apply bg-docs-code border border-docs-border rounded-lg; }
+  .prose pre code { @apply bg-transparent p-0 text-sm; }
+  .prose blockquote { @apply border-l-4 border-docs-accent pl-4 italic text-docs-muted; }
+  .prose a { @apply text-docs-accent underline-offset-2 hover:underline; }
+
+  /* Scrollbar hide for mobile breadcrumb */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dark {
+    --color-docs-bg: #0d0d0d;
+    --color-docs-surface: #1a1a1a;
+    --color-docs-border: #333333;
+    --color-docs-text: #f5f5f5;
+    --color-docs-muted: #a3a3a3;
+    --color-docs-accent: #4da3ff;
+    --color-docs-accent-hover: #7ab3ff;
+    --color-docs-accent-subtle: #1e3a5f;
+    --color-docs-success: #34d399;
+    --color-docs-warning: #fbbf24;
+    --color-docs-error: #f87171;
+    --color-docs-code: #1e1e1e;
+  }
+}

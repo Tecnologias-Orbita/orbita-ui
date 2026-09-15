@@ -1,11 +1,6 @@
-import { twMerge } from "tailwind-merge";
-import type { IComponent } from "../common";
+import type { IIconProps } from "./types";
 
-interface Props extends IComponent {
-  size?: number;
-}
-
-export default function XIcon({ className, size, ...props }: Props) {
+export default function XIcon({ className, size, ...props }: IIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +8,7 @@ export default function XIcon({ className, size, ...props }: Props) {
       viewBox="0 0 24 24"
       strokeWidth={2}
       stroke="currentColor"
-      className={twMerge("size-4", className)}
+      className={className}
       {...{ ...props, width: size + "px", height: size + "px" }}
     >
       <path

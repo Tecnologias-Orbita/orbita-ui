@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "ui-react:dev": "npm run -w orbita-ui-react build -- --watch"
+    "ui-react:dev": "npm run -w orbita-ui-react build -- --watch",
+    "doc:dev": "cd documentation && npm run dev",
+    "doc:build": "cd documentation && npm run build"
   },
   "repository": {
     "url": "https://github.com/Tecnologias-Orbita/orbita-ui.git"
@@ -32,10 +34,12 @@
     "@eslint/css": "^1.4.0",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.0.1",
+    "@oscarmarin/mcp-devtools": "^1.0.1",
     "eslint": "^10.9.1",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.11.0",
     "jiti": "^2.7.0",
+    "skills": "^1.5.18",
     "typescript": "~6.0.0",
     "typescript-eslint": "^8.69.0"
   }

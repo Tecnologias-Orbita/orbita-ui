@@ -124,7 +124,7 @@ function Sidebar({
         )}
         {...props}
       >
-        {collapseState === 0 && (
+        {collapseState === 0 ? (
           <div
             ref={sidebarButtonRef}
             className={twMerge(
@@ -145,26 +145,26 @@ function Sidebar({
                 </Btn>
               )}
           </div>
-        )}
-        {collapseMode !== "disabled" && (
+        ) : (
           <>
-            {switchButton?.(onCollapse) ?? (
-              <div
-                ref={sidebarButtonRef}
-                className="p-2 flex justify-end transition-transform duration-75"
-              >
-                <Btn
-                  onClick={onCollapse}
-                  className="p-2 min-w-max w-10 aspect-square grid place-items-center"
+            {collapseMode !== "disabled" &&
+              (switchButton?.(onCollapse) ?? (
+                <div
+                  ref={sidebarButtonRef}
+                  className="p-2 flex justify-end transition-transform duration-75"
                 >
-                  {collapseState === 1 ? (
-                    <BurgerIcon size={24} />
-                  ) : (
-                    <XIcon size={24} />
-                  )}
-                </Btn>
-              </div>
-            )}
+                  <Btn
+                    onClick={onCollapse}
+                    className="p-2 min-w-max w-10 aspect-square grid place-items-center"
+                  >
+                    {collapseState === 1 ? (
+                      <BurgerIcon size={24} />
+                    ) : (
+                      <XIcon size={24} />
+                    )}
+                  </Btn>
+                </div>
+              ))}
             {typeof children === "function" ? children(isCollapsed) : children}
           </>
         )}
