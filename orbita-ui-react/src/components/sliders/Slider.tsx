@@ -1,59 +1,176 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+  createContext,
+  useContext,
+  useId,
+  Children,
+  isValidElement,
+  cloneElement,
+} from "react";
 import { twMerge } from "tailwind-merge";
-import type { SliderProps, SliderButtonProps, SliderDotsProps } from "./types";
+import type {
+  SliderProps,
+  SliderTrackProps,
+  SliderSlideProps,
+  SliderButtonProps,
+  SliderDotsProps,
+  SliderArrowProps,
+  SliderContextValue,
+} from "./types";
 import { ChevronLeft, ChevronRight } from "../icons";
 
-function SliderButton({
-  onClick,
-  disabled,
+function HorizontalSlider() {
+  return (
+    <div
+      className={twMerge("flex w-full", className)}
+      style={{ ...trackStyle, ...style }}
+      aria-live="polite"
+      aria-atomic="true"
+      {...props}
+    >
+      {Children.map(children, (child, index) => {
+        if (!isValidElement(child)) return child;
+        return cloneElement(child as React.ReactElement<SliderSlideProps>, {
+          index,
+        });
+      })}
+    </div>
+  );
+}
+
+function SliderSlide({
+  children,
   className,
-  position = "left",
+  style,
+  index: propIndex,
+  ...props
+}: SliderSlideProps) {
+  const { registerSlide, slidesPerView } = useSliderContext();
+  const slideRef = useRef<HTMLDivElement>(null);
+  const generatedId = useId();
+  const slideIndex = propIndex ?? 0;
+
+  useEffect(() => {
+    registerSlide(slideIndex, slideRef.current);
+    return () => registerSlide(slideIndex, null);
+  }, [slideIndex, registerSlide]);
+
+  return (
+    <div
+      ref={slideRef}
+      className={twMerge("shrink-0 px-4", className)}
+      style={{ ...style, width: `${100 / slidesPerView}%` }}
+      role="group"
+      aria-roledescription="slide"
+      id={generatedId}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+function SliderButton({
+  direction,
+  className,
+  style,
+  children,
+  "aria-label": ariaLabel,
   ...props
 }: SliderButtonProps) {
+  const {
+    goNext,
+    goPrev,
+    isTransitioning,
+    currentIndex,
+    totalSlides,
+    loop,
+    slidesPerView,
+  } = useSliderContext();
+  const isPrev = direction === "prev";
+  const maxIndex = Math.max(0, totalSlides - slidesPerView);
+  const disabled =
+    isTransitioning ||
+    (!loop && (isPrev ? currentIndex === 0 : currentIndex === maxIndex));
+
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={isPrev ? goPrev : goNext}
       disabled={disabled}
       className={twMerge(
-        "absolute top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 ease-in-out hover:bg-white hover:text-slate-900 hover:scale-110 active:scale-95 disabled:pointer-events-none disabled:opacity-30",
-        position === "left" ? "left-4" : "right-4",
+        "absolute top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out hover:bg-white hover:text-slate-900 hover:scale-105 active:scale-95 disabled:pointer-events-none disabled:opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2",
+        isPrev ? "left-3" : "right-3",
         className,
       )}
+      style={style}
+      aria-label={ariaLabel || (isPrev ? "Previous slide" : "Next slide")}
       {...props}
     >
-      {position === "left" ? <ChevronLeft /> : <ChevronRight />}
+      {children ??
+        (isPrev ? <ChevronLeft size={22} /> : <ChevronRight size={22} />)}
     </button>
   );
 }
 
 function SliderDots({
-  total,
-  current,
-  onDotClick,
   className,
+  style,
+  renderDot,
   ...props
 }: SliderDotsProps) {
+  const { currentIndex, totalSlides, goToSlide, slidesPerView } =
+    useSliderContext();
+  const maxIndex = Math.max(0, totalSlides - slidesPerView);
+  const dotCount = maxIndex + 1;
+
+  const dots = useMemo(
+    () =>
+      Array.from({ length: dotCount }, (_, i) => ({
+        index: i,
+        isActive: i === currentIndex,
+      })),
+    [dotCount, currentIndex],
+  );
+
   return (
     <div
-      className={twMerge("flex items-center justify-center gap-2", className)}
+      className={twMerge(
+        "absolute bottom-4 left-1/2 z-10 -translate-x-1/2 flex items-center gap-1.5",
+        className,
+      )}
+      style={style}
+      role="tablist"
+      aria-label="Slide indicators"
       {...props}
     >
-      {Array.from({ length: total }).map((_, index) => {
-        const isActive = index === current;
+      {dots.map(({ index, isActive }) => {
+        const onClick = () => goToSlide(index);
+        if (renderDot) {
+          return (
+            <div key={index} role="tab" aria-selected={isActive}>
+              {renderDot({ index, isActive, onClick })}
+            </div>
+          );
+        }
         return (
           <button
             key={index}
             type="button"
-            onClick={() => onDotClick?.(index)}
+            onClick={onClick}
             className={twMerge(
-              "relative h-2.5 w-2.5 rounded-full transition-all duration-300 ease-in-out",
+              "relative h-2 w-2 rounded-full transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2",
               isActive
-                ? "bg-white w-6 scale-100"
-                : "bg-white/50 scale-90 hover:bg-white/80 hover:scale-105",
+                ? "bg-white w-8 scale-100"
+                : "bg-white/40 hover:bg-white/70 hover:scale-125",
             )}
+            role="tab"
+            aria-selected={isActive}
             aria-label={`Go to slide ${index + 1}`}
-            aria-current={isActive ? "true" : undefined}
           />
         );
       })}
@@ -61,161 +178,31 @@ function SliderDots({
   );
 }
 
-export default function Slider({
-  slides,
-  currentSlide,
-  onSlideChange,
-  autoPlay = false,
-  autoPlayInterval = 5000,
-  showButtons = true,
-  showDots = true,
-  loop = true,
-  transitionDuration = 500,
+function SliderArrow({
+  direction,
   className,
   style,
+  children,
   ...props
-}: SliderProps) {
-  const isControlled = currentSlide !== undefined;
-  const [internalSlide, setInternalSlide] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const currentIndex = isControlled ? currentSlide! : internalSlide;
-  const totalSlides = slides.length;
-
-  /* ---- navigation helpers ---- */
-
-  // const goToSlide = useCallback(
-  //   (index: number) => {
-  //     if (isTransitioning) return;
-  //     setIsTransitioning(true);
-
-  //     let nextIndex = index;
-  //     if (!loop) {
-  //       nextIndex = Math.max(0, Math.min(index, totalSlides - 1));
-  //     } else {
-  //       nextIndex = ((index % totalSlides) + totalSlides) % totalSlides;
-  //     }
-
-  //     if (!isControlled) {
-  //       setInternalSlide(nextIndex);
-  //     }
-  //     onSlideChange?.(nextIndex);
-
-  //     setTimeout(() => {
-  //       setIsTransitioning(false);
-  //     }, transitionDuration);
-  //   },
-  //   [
-  //     isTransitioning,
-  //     loop,
-  //     totalSlides,
-  //     isControlled,
-  //     onSlideChange,
-  //     transitionDuration,
-  //   ],
-  // );
-
-  // const goNext = useCallback(() => {
-  //   goToSlide(currentIndex + 1);
-  // }, [goToSlide, currentIndex]);
-
-  // const goPrev = useCallback(() => {
-  //   goToSlide(currentIndex - 1);
-  // }, [goToSlide, currentIndex]);
-
-  /* ---- autoplay ---- */
-
-  // const resetAutoplay = useCallback(() => {
-  //   if (autoplayRef.current) {
-  //     clearInterval(autoplayRef.current);
-  //     autoplayRef.current = null;
-  //   }
-  //   if (autoPlay && totalSlides > 1) {
-  //     autoplayRef.current = setInterval(() => {
-  //       goToSlide(currentIndex + 1);
-  //     }, autoPlayInterval);
-  //   }
-  // }, [autoPlay, autoPlayInterval, goToSlide, currentIndex, totalSlides]);
-
-  // useEffect(() => {
-  //   resetAutoplay();
-  //   return () => {
-  //     if (autoplayRef.current) {
-  //       clearInterval(autoplayRef.current);
-  //     }
-  //   };
-  // }, [resetAutoplay]);
-
-  /* ---- styles ---- */
-
-  const trackStyle: React.CSSProperties = {
-    transform: `translateX(-${currentIndex * 100}%)`,
-    transition: `transform ${transitionDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+}: SliderArrowProps) {
+  const buttonProps: SliderButtonProps = {
+    direction,
+    children,
+    ...(className !== undefined && { className }),
+    ...(style !== undefined && { style }),
+    ...props,
   };
-
-  return (
-    <div
-      className={twMerge(
-        "relative w-full overflow-hidden rounded-lg",
-        className,
-      )}
-      style={style}
-      role="region"
-      aria-roledescription="carousel"
-      {...props}
-    >
-      {/* Slide Track */}
-      <div
-        ref={trackRef}
-        className="flex w-full"
-        style={trackStyle}
-        aria-live="polite"
-      >
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className="w-full shrink-0"
-            role="group"
-            aria-roledescription="slide"
-            aria-label={`Slide ${index + 1} of ${totalSlides}`}
-          >
-            {slide}
-          </div>
-        ))}
-      </div>
-
-      {/* Navigation Buttons */}
-      {showButtons && totalSlides > 1 && (
-        <>
-          {(loop || currentIndex > 0) && (
-            <SliderButton
-              // onClick={goPrev}
-              position="left"
-              aria-label="Previous slide"
-            />
-          )}
-          {(loop || currentIndex < totalSlides - 1) && (
-            <SliderButton
-              // onClick={goNext}
-              position="right"
-              aria-label="Next slide"
-            />
-          )}
-        </>
-      )}
-
-      {/* Dot Indicators */}
-      {showDots && totalSlides > 1 && (
-        <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2">
-          <SliderDots
-            total={totalSlides}
-            current={currentIndex}
-            // onDotClick={goToSlide}
-          />
-        </div>
-      )}
-    </div>
-  );
+  return <SliderButton {...buttonProps} />;
 }
+
+const Slider = Object.assign(SliderProvider, {
+  Track: SliderTrack,
+  Slide: SliderSlide,
+  Button: SliderButton,
+  Dots: SliderDots,
+  Arrow: SliderArrow,
+});
+
+export default Slider;
+export { SliderTrack, SliderSlide, SliderButton, SliderDots, SliderArrow };
+export type { SliderContextValue };
