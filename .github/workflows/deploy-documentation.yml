@@ -15,8 +15,10 @@ jobs:
         with:
           node-version: 20
 
-      - name: Linking Orbita UI
-        run: cd orbita-ui-react && npm link
+      - name: Creating the npmrc file
+        run: cd documentation; \
+          echo "@tecnologias-orbita:registry=https://npm.pkg.github.com" > .npmrc; \
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
       - name: Installing dependencies
         run: cd documentation && npm i --legacy-peer-deps
 
