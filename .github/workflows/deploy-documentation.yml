@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,15 +19,20 @@ jobs:
 
       - name: Creating the npmrc file
         run: |
-          cd documentation \
-          echo "@tecnologias-orbita:registry=https://npm.pkg.github.com" > .npmrc \
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+          cd documentation; \
+          echo "@tecnologias-orbita:registry=https://npm.pkg.github.com" > .npmrc; \
+          echo "//npm.pkg.github.com/:_authToken={GITHUB_TOKEN}" >> .npmrc;
 
       - name: Installing dependencies
-        run: cd documentation && npm i --legacy-peer-deps
+        run: |
+          cd documentation; \
+          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}; \
+          npm i --legacy-peer-deps
 
       - name: Building documentation
-        run: cd documentation && npm run build
+        run: |
+          cd documentation; \
+          npm run build
 
       - name: Upload static files as artifact
         uses: actions/upload-pages-artifact@v3
