@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type CarouselContext = {
-  currentItem: React.RefObject<string>;
+  currentIndex: React.RefObject<number>;
   registerItem: (item: string) => void;
   goTo: (item: string) => void;
   goNext: () => void;
@@ -9,7 +9,7 @@ type CarouselContext = {
 };
 
 const initialValue: CarouselContext = {
-  currentItem: { current: "" },
+  currentIndex: { current: 0 },
   registerItem(_item) {},
   goTo(_item) {},
   goNext() {},
@@ -23,6 +23,7 @@ interface ProviderProps {
   animate?: boolean;
   loop?: boolean;
   loopInterval?: number;
+  classSelector?: string;
 }
 
 export function CarouselProvider({
@@ -30,15 +31,12 @@ export function CarouselProvider({
   animate = false,
   loop = false,
   loopInterval = 5000,
+  classSelector,
 }: ProviderProps) {
-  const [items, setItems] = useState<string[]>([]);
-  const currentItem = useRef<string>("");
+  const [items, setItems] = useState<{ id: string; left: number }[]>([]);
+  const currentIndex = useRef<number>(0);
   const loopingId = useRef<number>(0);
-
-  useEffect(() => {
-    if (currentItem.current || !items[0]) return;
-    currentItem.current = items[0];
-  }, [items]);
+  const repeatedPosition = useRef<number>(0);
 
   useEffect(() => {
     if (!loop) return;
@@ -58,40 +56,59 @@ export function CarouselProvider({
     };
   }, [items, loop, loopInterval]);
 
-  const registerItem = (item: string) => setItems((i) => [...i, item]);
+  const registerItem = (item: string) => {
+    const left =
+      document.querySelector(`#${item}`)?.getBoundingClientRect().left || 0;
+    setItems((i) => {
+      if (i.findIndex((i) => i.id === item) !== -1) return i;
+      return [...i, { id: item, left }];
+    });
+  };
 
-  const scroll = (id: string) => {
-    document.querySelector(`#${id}`)?.scrollIntoView({
+  const scrollTo = (index: number) => {
+    const parent = document.querySelector(`.${classSelector}`);
+    const left =
+      (items[index]?.left || 0) - (parent?.getBoundingClientRect().left || 0);
+
+    parent?.scrollTo({
+      left,
       behavior: animate ? "smooth" : "instant",
     });
   };
 
   const goTo = (item: string) => {
-    const goalItem = items.find((i) => i === item);
-    if (goalItem) currentItem.current = goalItem;
-    scroll(currentItem.current);
+    const index = items.findIndex((i) => i.id === item);
+    if (index !== -1) currentIndex.current = index;
+    scrollTo(currentIndex.current);
   };
 
   const goNext = () => {
     if (!items.length) return;
-    const index = items.findIndex((i) => i === currentItem.current);
-    const goalItem = items[index + 1];
-    currentItem.current = goalItem || items[0]!;
-    scroll(currentItem.current);
+    currentIndex.current =
+      currentIndex.current === items.length - 1 ? 0 : currentIndex.current + 1;
+    scrollTo(currentIndex.current);
+
+    const left =
+      document.querySelector(`#${items.at(-1)?.id}`)?.getBoundingClientRect()
+        .left || 0;
+    if (repeatedPosition.current === left) {
+      scrollTo(0);
+    } else {
+      repeatedPosition.current = left;
+    }
   };
 
   const goPrev = () => {
     if (!items.length) return;
-    const index = items.findIndex((i) => i === currentItem.current);
-    const goalItem = items[index - 1];
-    currentItem.current = goalItem || items[items.length - 1]!;
-    scroll(currentItem.current);
+    currentIndex.current =
+      currentIndex.current === 0 ? items.length - 1 : currentIndex.current - 1;
+    scrollTo(currentIndex.current);
   };
 
   return (
     <CarouselContext.Provider
       value={{
-        currentItem,
+        currentIndex,
         registerItem,
         goTo,
         goNext,
