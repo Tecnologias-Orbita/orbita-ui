@@ -16,10 +16,10 @@ export default function ComponentsPage() {
       category: "Buttons",
     },
     {
-      name: "Slider",
-      path: "/docs/orbita-ui-react/components/slider",
+      name: "Carousel",
+      path: "/docs/orbita-ui-react/components/carousel",
       description:
-        "Full-featured carousel with autoplay, navigation, dots, and keyboard support",
+        "Scroll-snap carousel for sliding items horizontally, with smooth scrolling, autoplay, and custom navigation",
       category: "Common",
     },
     {

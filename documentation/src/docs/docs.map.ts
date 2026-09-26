@@ -9,7 +9,6 @@ import NavbarPage from "./orbita-ui-react/components/navbar/page";
 import FooterPage from "./orbita-ui-react/components/footer/page";
 import SidebarPage from "./orbita-ui-react/components/sidebar/page";
 import IconsPage from "./orbita-ui-react/components/icons/page";
-import SliderPage from "./orbita-ui-react/components/slider/page";
 import CodePage from "./orbita-ui-react/components/code/page";
 import { uiReactMetadata } from "./orbita-ui-react/metadata";
 import { codeMetadata } from "./orbita-ui-react/components/code/metadata";
@@ -67,11 +66,6 @@ export const DOCS_MAP: DocMapType = {
             path: "/icons",
             name: "Icons",
             component: IconsPage,
-          },
-          slider: {
-            path: "/slider",
-            name: "Slider",
-            component: SliderPage,
           },
           code: {
             path: "/code",
