@@ -5,6 +5,8 @@ import { useEffect, useId } from "react";
 import { ChevronLeft, ChevronRight } from "../icons";
 import { Btn } from "../buttons";
 
+const CLASS_SELECTOR = "--carousel_div";
+
 interface CarouselButtonsProps {
   leftButtonFactory?: ((goPrev: () => void) => React.ReactNode) | undefined;
   rightButtonFactory?: ((goNext: () => void) => React.ReactNode) | undefined;
@@ -22,7 +24,7 @@ function CarouselButtons({
         leftButtonFactory(goPrev)
       ) : (
         <Btn
-          className="flex items-center justify-center rounded-full p-2 absolute top-1/2 left-4 z-10 group-hover:opacity-100 opacity-0 transition-opacity"
+          className="flex items-center justify-center rounded-full p-2 absolute top-1/2 left-4 z-10 group-hover:opacity-100 md:opacity-0 transition-opacity"
           style={{
             transform: "translateY(calc(-50% - 8px))",
           }}
@@ -35,7 +37,7 @@ function CarouselButtons({
         rightButtonFactory(goNext)
       ) : (
         <Btn
-          className="flex items-center justify-center rounded-full p-2 absolute top-1/2 right-4 z-10 group-hover:opacity-100 opacity-0 transition-opacity"
+          className="flex items-center justify-center rounded-full p-2 absolute top-1/2 right-4 z-10 group-hover:opacity-100 md:opacity-0 transition-opacity"
           style={{
             transform: "translateY(calc(-50% - 8px))",
           }}
@@ -66,7 +68,12 @@ function HorizontalCarousel({
   ...props
 }: CarouselProps) {
   return (
-    <CarouselProvider animate={animate} loop={loop} loopInterval={loopInterval}>
+    <CarouselProvider
+      animate={animate}
+      loop={loop}
+      loopInterval={loopInterval}
+      classSelector={CLASS_SELECTOR}
+    >
       <div
         aria-label="carousel"
         aria-roledescription="carousel"
@@ -76,7 +83,9 @@ function HorizontalCarousel({
         )}
         {...props}
       >
-        <div className="flex flex-1 gap-2 overflow-x-auto scroll-smooth snap-mandatory snap-x scrollbar-thumb-transparent scrollbar-track-transparent relative -z-5">
+        <div
+          className={`flex flex-1 gap-2 overflow-x-auto scroll-smooth snap-mandatory snap-x scrollbar-thumb-transparent scrollbar-track-transparent relative -z-5 ${CLASS_SELECTOR}`}
+        >
           {children}
         </div>
         <div className="absolute bottom-0 left-0 z-5 w-full h-[16px]" />
