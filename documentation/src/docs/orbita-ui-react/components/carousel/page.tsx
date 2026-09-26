@@ -2,7 +2,7 @@ import { Carousel } from "@tecnologias-orbita/orbita-ui-react";
 
 export default function CarouselPage() {
   return (
-    <div className="prose max-w-4xl mx-auto px-4 py-8">
+    <div className="prose">
       <h1>Carousel</h1>
       <p className="lead">
         A scroll-snap carousel for sliding items horizontally, with optional
@@ -13,15 +13,15 @@ export default function CarouselPage() {
       <p>
         The <code>Carousel</code> component slides a set of items horizontally
         using native CSS scroll snapping rather than transform-based animation.
-        Items are rendered as children of <code>Carousel.HorizontalCarousel</code>{" "}
-        and each one is wrapped in a <code>Carousel.Item</code>, which registers
-        itself with the carousel on mount so the navigation buttons can scroll
-        to it.
+        Items are rendered as children of{" "}
+        <code>Carousel.HorizontalCarousel</code> and each one is wrapped in a{" "}
+        <code>Carousel.Item</code>, which registers itself with the carousel on
+        mount so the navigation buttons can scroll to it.
       </p>
       <p>
         Navigation state lives in a context provided by{" "}
-        <code>HorizontalCarousel</code>. The default arrow buttons are visible on
-        hover; pass <code>leftButtonFactory</code> or{" "}
+        <code>HorizontalCarousel</code>. The default arrow buttons are visible
+        on hover; pass <code>leftButtonFactory</code> or{" "}
         <code>rightButtonFactory</code> to replace them with your own controls.
       </p>
 
@@ -35,16 +35,18 @@ export default function CarouselPage() {
         Ten items with <code>animate</code> and <code>loop</code> enabled. Hover
         the carousel to reveal the navigation buttons.
       </p>
-      <div className="not-prose max-w-full my-6">
-        <Carousel.HorizontalCarousel animate loop>
-          {Array.from({ length: 10 }, (_, i) => (
-            <Carousel.Item
-              key={i}
-              className="w-72 h-48 bg-black/10 border border-black flex items-center justify-center"
-            >
-              Item {i + 1}
-            </Carousel.Item>
-          ))}
+      <div className="not-prose my-6">
+        <Carousel.HorizontalCarousel animate loop loopInterval={3000}>
+          {Array(10)
+            .fill(0)
+            .map((_, i) => (
+              <Carousel.Item
+                key={i}
+                className="w-72 h-48 bg-black/10 border border-black flex items-center justify-center"
+              >
+                Item {i + 1}
+              </Carousel.Item>
+            ))}
         </Carousel.HorizontalCarousel>
       </div>
 
@@ -103,17 +105,21 @@ export default function CarouselPage() {
           </tr>
           <tr className="border-b">
             <td className="p-3 font-mono">leftButtonFactory</td>
-            <td className="p-3 font-mono">(goPrev: () =&gt; void) =&gt; React.ReactNode</td>
+            <td className="p-3 font-mono">
+              (goPrev: () =&gt; void) =&gt; React.ReactNode
+            </td>
             <td className="p-3">No</td>
             <td className="p-3">—</td>
             <td className="p-3">
-              Replaces the default previous button. Receives{" "}
-              <code>goPrev</code> to trigger navigation
+              Replaces the default previous button. Receives <code>goPrev</code>{" "}
+              to trigger navigation
             </td>
           </tr>
           <tr className="border-b">
             <td className="p-3 font-mono">rightButtonFactory</td>
-            <td className="p-3 font-mono">(goNext: () =&gt; void) =&gt; React.ReactNode</td>
+            <td className="p-3 font-mono">
+              (goNext: () =&gt; void) =&gt; React.ReactNode
+            </td>
             <td className="p-3">No</td>
             <td className="p-3">—</td>
             <td className="p-3">
@@ -162,7 +168,8 @@ export default function CarouselPage() {
             <td className="p-3 font-mono">string</td>
             <td className="p-3">No</td>
             <td className="p-3">
-              Additional CSS classes, merged with <code>snap-start shrink-0</code>
+              Additional CSS classes, merged with{" "}
+              <code>snap-start shrink-0</code>
             </td>
           </tr>
           <tr className="border-b">
@@ -174,9 +181,9 @@ export default function CarouselPage() {
         </tbody>
       </table>
       <p>
-        The item width is not set by the component, so give each item an explicit
-        width (for example <code>w-72</code>) or a flex basis to control how
-        much is visible at once.
+        The item width is not set by the component, so give each item an
+        explicit width (for example <code>w-72</code>) or a flex basis to
+        control how much is visible at once.
       </p>
 
       <h2>Default Styles</h2>
@@ -388,10 +395,9 @@ interface CarouselProps extends IComponent, CarouselButtonsProps {
         </li>
         <li>
           <strong>Hover reveal</strong>: the default buttons use{" "}
-          <code>group-hover:opacity-100</code> and sit at{" "}
-          <code>opacity-0</code>. They are unreachable by keyboard focus while
-          hidden; provide custom buttons with factories if you need focusable
-          controls.
+          <code>group-hover:opacity-100</code> and sit at <code>opacity-0</code>
+          . They are unreachable by keyboard focus while hidden; provide custom
+          buttons with factories if you need focusable controls.
         </li>
         <li>
           <strong>Scrollbar</strong>: the scroll container hides its thumb and
