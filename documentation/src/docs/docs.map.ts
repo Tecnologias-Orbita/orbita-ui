@@ -9,12 +9,13 @@ import NavbarPage from "./orbita-ui-react/components/navbar/page";
 import FooterPage from "./orbita-ui-react/components/footer/page";
 import SidebarPage from "./orbita-ui-react/components/sidebar/page";
 import IconsPage from "./orbita-ui-react/components/icons/page";
-import SliderPage from "./orbita-ui-react/components/slider/page";
 import CodePage from "./orbita-ui-react/components/code/page";
 import { uiReactMetadata } from "./orbita-ui-react/metadata";
 import { codeMetadata } from "./orbita-ui-react/components/code/metadata";
 import CarouselPage from "./orbita-ui-react/components/carousel/page";
 import { carouselMetadata } from "./orbita-ui-react/components/carousel/metadata";
+import BadgePage from "./orbita-ui-react/components/badge/page";
+import { badgeMetadata } from "./orbita-ui-react/components/badge/metadata";
 
 export const DOCS_MAP: DocMapType = {
   "orbita-ui-react": {
@@ -68,11 +69,6 @@ export const DOCS_MAP: DocMapType = {
             name: "Icons",
             component: IconsPage,
           },
-          slider: {
-            path: "/slider",
-            name: "Slider",
-            component: SliderPage,
-          },
           code: {
             path: "/code",
             name: "Code",
@@ -84,6 +80,12 @@ export const DOCS_MAP: DocMapType = {
             name: "Carousel",
             component: CarouselPage,
             metadata: carouselMetadata,
+          },
+          badge: {
+            path: "/badge",
+            name: "Badge",
+            component: BadgePage,
+            metadata: badgeMetadata,
           },
         },
       },

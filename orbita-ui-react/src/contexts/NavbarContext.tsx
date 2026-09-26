@@ -39,7 +39,7 @@ export function NavbarProvider({
       if (URL.canParse(href)) href = new URL(href).pathname;
       setActivePath(href);
     };
-    const elements = document.querySelectorAll(`${classSelector} a`);
+    const elements = document.querySelectorAll(`.${classSelector} a`);
 
     elements.forEach((e) => e.addEventListener("click", fn));
     return () => {

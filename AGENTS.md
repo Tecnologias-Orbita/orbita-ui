@@ -39,7 +39,7 @@
 
 ## Key Files - orbita-ui-react
 
-- `src/index.ts` — public exports: `Separator`, `Btn`, `Navbar`, `Footer`, `Sidebar`
+- `src/index.ts` — public exports: `Separator`, `Btn`, `Badge`, `Carousel`, `Navbar`, `Footer`, `Sidebar`, `Code`
 - `src/index.css` — Tailwind v4 styles + CSS variables, content config
 - `rollup.config.js` — dual CJS/ESM bundle + types via rollup-plugin-dts
 - `tsconfig.json` — strict, bundler moduleResolution, React JSX
@@ -47,9 +47,13 @@
 - `src/components/`:
   - `common/Separator.tsx`
   - `buttons/Btn.tsx` (with variants, sizes, loading states)
+  - `badge/Badge.tsx` (inline label, `twMerge` class merging)
+  - `carousel/Carousel.tsx` (exports `HorizontalCarousel` + `Item`; scroll-snap based)
+  - `docs/Code.tsx` (Prism syntax highlighting)
   - `layout/Navbar.tsx`, `Footer.tsx`, `Sidebar.tsx` (with context)
-  - `icons/burger.tsx`, `x.tsx`
+  - `icons/burger.tsx`, `x.tsx`, `chevron.tsx`
 - `src/contexts/NavbarContext.tsx` — responsive navbar state
+- `src/contexts/CarouselContext.tsx` — carousel item registry + `goNext`/`goPrev`/`goTo`
 
 ## Key Files - Documentation (`./documentation`)
 
@@ -82,6 +86,6 @@ Sidebar navigation auto-generated from `DOCS_MAP` keys.
 - No test suite implemented (`npm test` echoes error)
 - Private package; consumers need `.npmrc` with GitHub Packages registry + token
 - Tailwind v4 uses new config format (no `tailwind.config.js` required beyond content)
-- Documentation pages currently return `null` (placeholder components)
+- Component doc pages pair prose (`.prose`, `prose max-w-4xl`) with a `<Code>`-based sample block; `Code` and `Carousel` pages render live component demos alongside the prose
 - `vite.config.ts` uses `tsconfigPaths: true` for `@/` path aliases
 - orbita-ui-react exports CSS via `dist/` - docs import from `../../node_modules/@tecnologias-orbita/orbita-ui-react/dist`
