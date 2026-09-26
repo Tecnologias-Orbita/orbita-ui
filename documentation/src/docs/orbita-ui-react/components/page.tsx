@@ -23,6 +23,12 @@ export default function ComponentsPage() {
       category: "Common",
     },
     {
+      name: "Badge",
+      path: "/docs/orbita-ui-react/components/badge",
+      description: "Small inline label for status indicators, counts, and tags",
+      category: "Common",
+    },
+    {
       name: "Code",
       path: "/docs/orbita-ui-react/components/code",
       description: "Syntax highlighting component for code blocks with Dracula theme",

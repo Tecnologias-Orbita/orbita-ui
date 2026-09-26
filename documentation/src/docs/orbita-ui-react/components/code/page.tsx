@@ -219,7 +219,7 @@ export default function DocumentationPage() {
         Then import the components you need:
       </p>
       <Code language="tsx">
-        {\`import { Btn, Slider, Code } from "@tecnologias-orbita/orbita-ui-react";\`}
+        {\`import { Btn, Badge, Code } from "@tecnologias-orbita/orbita-ui-react";\`}
       </Code>
     </article>
   );

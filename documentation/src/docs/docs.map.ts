@@ -14,6 +14,8 @@ import { uiReactMetadata } from "./orbita-ui-react/metadata";
 import { codeMetadata } from "./orbita-ui-react/components/code/metadata";
 import CarouselPage from "./orbita-ui-react/components/carousel/page";
 import { carouselMetadata } from "./orbita-ui-react/components/carousel/metadata";
+import BadgePage from "./orbita-ui-react/components/badge/page";
+import { badgeMetadata } from "./orbita-ui-react/components/badge/metadata";
 
 export const DOCS_MAP: DocMapType = {
   "orbita-ui-react": {
@@ -78,6 +80,12 @@ export const DOCS_MAP: DocMapType = {
             name: "Carousel",
             component: CarouselPage,
             metadata: carouselMetadata,
+          },
+          badge: {
+            path: "/badge",
+            name: "Badge",
+            component: BadgePage,
+            metadata: badgeMetadata,
           },
         },
       },
