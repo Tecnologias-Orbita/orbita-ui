@@ -13,6 +13,8 @@ import SliderPage from "./orbita-ui-react/components/slider/page";
 import CodePage from "./orbita-ui-react/components/code/page";
 import { uiReactMetadata } from "./orbita-ui-react/metadata";
 import { codeMetadata } from "./orbita-ui-react/components/code/metadata";
+import CarouselPage from "./orbita-ui-react/components/carousel/page";
+import { carouselMetadata } from "./orbita-ui-react/components/carousel/metadata";
 
 export const DOCS_MAP: DocMapType = {
   "orbita-ui-react": {
@@ -76,6 +78,12 @@ export const DOCS_MAP: DocMapType = {
             name: "Code",
             component: CodePage,
             metadata: codeMetadata,
+          },
+          carousel: {
+            path: "/carousel",
+            name: "Carousel",
+            component: CarouselPage,
+            metadata: carouselMetadata,
           },
         },
       },

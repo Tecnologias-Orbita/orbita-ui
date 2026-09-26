@@ -4,6 +4,7 @@ type ActiveObject = {
   className?: undefined | string;
   style?: undefined | React.CSSProperties;
 };
+
 interface ContextType {
   activePath: string;
   activeObject: ActiveObject;
@@ -36,7 +37,6 @@ export function NavbarProvider({
     const fn = (e: Event) => {
       let { href } = e.target as HTMLAnchorElement;
       if (URL.canParse(href)) href = new URL(href).pathname;
-      console.log(href);
       setActivePath(href);
     };
     const elements = document.querySelectorAll(`${classSelector} a`);

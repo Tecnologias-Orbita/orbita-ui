@@ -3,7 +3,9 @@ export { Separator } from "./components/common";
 
 export { Btn } from "./components/buttons";
 
-export { Slider } from "./components/sliders";
+export { Badge } from "./components/badge";
+
+export { Carousel } from "./components/carousel";
 
 export { Navbar, Footer, Sidebar } from "./components/layout";
 
