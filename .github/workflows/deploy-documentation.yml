@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,9 +24,9 @@ jobs:
       - name: Installing dependencies
         run: |
           cd documentation; \
-          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}; \
+          export GITHUB_TOKEN=${{ secrets.GH_AUTH_TOKEN }}; \
           npm i --legacy-peer-deps; \
-          npm i @tecnologias-orbita/orbita-ui-react@latest;
+          npm i @tecnologias-orbita/orbita-ui-react@latest --legacy-peer-deps;
 
       - name: Building documentation
         run: |
