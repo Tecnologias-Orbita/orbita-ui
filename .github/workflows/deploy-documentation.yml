@@ -29,6 +29,7 @@ jobs:
       - name: Installing dependencies
         run: |
           cd documentation; \
+          cat .npmrc; \
           export GITHUB_TOKEN=${{ secrets.GH_AUTH_TOKEN }}; \
           npm i --legacy-peer-deps; \
           npm i @tecnologias-orbita/orbita-ui-react@latest --legacy-peer-deps;
