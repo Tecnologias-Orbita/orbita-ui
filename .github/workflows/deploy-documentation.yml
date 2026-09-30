@@ -27,7 +27,8 @@ jobs:
         run: |
           cd documentation; \
           export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}; \
-          npm i --legacy-peer-deps
+          npm i --legacy-peer-deps; \
+          npm i @tecnologias-orbita/orbita-ui-react@latest;
 
       - name: Building documentation
         run: |
