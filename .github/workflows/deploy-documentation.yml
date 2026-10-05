@@ -39,6 +39,8 @@ jobs:
         run: |
           cd documentation; \
           npm run build
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
 
       - name: Upload static files as artifact
         uses: actions/upload-pages-artifact@v3

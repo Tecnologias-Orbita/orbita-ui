@@ -2,9 +2,13 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { Mode, plugin } from "vite-plugin-markdown";
+import { config } from "dotenv";
 
-// https://vite.dev/config/
+config();
+
 export default defineConfig({
+  base:
+    process.env.NODE_ENV === "production" ? `${process.env.BASE_URL}/` : "/",
   plugins: [
     react(),
     tailwindcss(),
