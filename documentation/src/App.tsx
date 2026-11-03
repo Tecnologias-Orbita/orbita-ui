@@ -4,6 +4,7 @@ import { Navbar, Sidebar } from "@tecnologias-orbita/orbita-ui-react";
 import DocsRouter from "./docs/Docs.router";
 import { DOCS_MAP } from "./docs/docs.map";
 import NotFoundPage from "./pages/404.page";
+import CustomPage from "./pages/Custom";
 
 export default function App() {
   return (
@@ -52,6 +53,7 @@ export default function App() {
               path="/docs/:pkg?/:segment?/:page?"
               element={<DocsRouter />}
             />
+            <Route path="/dev/custom" element={<CustomPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Sidebar.Main>
