@@ -1,17 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { Mode, plugin } from "vite-plugin-markdown";
+import { config } from "dotenv";
 
-// https://vite.dev/config/
+config();
+
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    plugin({
-      mode: [Mode.MARKDOWN],
-    }),
-  ],
+  base:
+    process.env.NODE_ENV === "production"
+      ? `${process.env.BASE_URL || ""}/`
+      : "/",
+  plugins: [react(), tailwindcss()],
   resolve: {
     tsconfigPaths: true,
   },
@@ -21,9 +20,14 @@ export default defineConfig({
         codeSplitting: {
           groups: [
             {
-              name: "large-libs",
+              name: "react-core",
+              test: /node_modules\/(react|react-dom|scheduler)\//,
+              priority: 20,
+            },
+            {
+              name: "vendor",
               test: /node_modules/,
-              minSize: 100000,
+              minSize: 50000,
               maxSize: 250000,
               priority: 10,
             },
@@ -32,7 +36,7 @@ export default defineConfig({
               test: /docs/,
               minSize: 50000,
               maxSize: 250000,
-              priority: 20,
+              priority: 1,
             },
           ],
         },

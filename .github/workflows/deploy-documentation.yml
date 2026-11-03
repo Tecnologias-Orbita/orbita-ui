@@ -6,8 +6,14 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
+    environment: github-pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,13 +21,26 @@ jobs:
         with:
           node-version: 20
 
-      - name: Linking Orbita UI
-        run: cd orbita-ui-react && npm link
+      - name: Creating the npmrc file
+        run: |
+          cd documentation; \
+          echo "@tecnologias-orbita:registry=https://npm.pkg.github.com" > .npmrc; \
+          echo "//npm.pkg.github.com/:_authToken=\${GITHUB_TOKEN}" >> .npmrc;
+
       - name: Installing dependencies
-        run: cd documentation && npm i --legacy-peer-deps
+        run: |
+          cd documentation; \
+          cat .npmrc; \
+          export GITHUB_TOKEN=${{ secrets.GH_AUTH_TOKEN }}; \
+          npm i --legacy-peer-deps; \
+          npm i @tecnologias-orbita/orbita-ui-react@latest --legacy-peer-deps;
 
       - name: Building documentation
-        run: cd documentation && npm run build
+        run: |
+          cd documentation; \
+          npm run build
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
 
       - name: Upload static files as artifact
         uses: actions/upload-pages-artifact@v3
